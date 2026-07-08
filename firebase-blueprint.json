@@ -1,0 +1,43 @@
+{
+  "entities": {
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "User's consulting session state and conversation history",
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "array",
+          "description": "List of chat messages"
+        },
+        "currentStage": {
+          "type": "string",
+          "description": "The current stage of therapy/coaching"
+        },
+        "syncProgress": {
+          "type": "number",
+          "description": "Progress percentage of prefrontal cortex synchronization"
+        },
+        "missions": {
+          "type": "array",
+          "description": "Daily actionable missions assigned to the user"
+        },
+        "currentNeuralState": {
+          "type": "string",
+          "description": "State indicator: neutral, overheated, or synced"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of the last save"
+        }
+      },
+      "required": ["messages", "currentStage", "syncProgress", "missions", "currentNeuralState", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "chat_sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Individual user session document"
+    }
+  }
+}

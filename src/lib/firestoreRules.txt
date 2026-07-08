@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /chat_sessions/{sessionId} {
+      // Allow read/write if the session ID starts with "session_"
+      // (ensuring they can only access standard random guest session documents).
+      // Or, if authenticated, the user can read/write their own document (where sessionId matches their UID).
+      allow read, write: if sessionId.matches("^session_.*") || 
+                          (request.auth != null && request.auth.uid == sessionId);
+    }
+  }
+}

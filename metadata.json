@@ -1,0 +1,6 @@
+{
+  "name": "정신체리",
+  "description": "따뜻한 위로와 냉철한 뇌과학의 만남, 정신체리 AI 심리 상담 서비스",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

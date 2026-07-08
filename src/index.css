@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Hanken Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background-color: #fcfbfc;
+  color: #191c1d;
+  font-family: var(--font-sans);
+}
+
+/* Custom fade transitions */
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-cherry-gradient {
+  background: linear-gradient(135deg, #ba1340 0%, #40000f 100%);
+}
+
+.bg-slate-gradient {
+  background: linear-gradient(135deg, #2e3132 0%, #191c1d 100%);
+}

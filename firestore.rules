@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /chat_sessions/{sessionId} {
+      // Helper functions for clean rules
+      function isGuestSession(id) {
+        return id.matches("^session_.*");
+      }
+      function isOwner(id) {
+        return request.auth != null && request.auth.uid == id;
+      }
+      function canAccess(id) {
+        return isGuestSession(id) || isOwner(id);
+      }
+
+      // 1. 'get' is allowed if they can access the session
+      allow get: if canAccess(sessionId);
+      allow list: if false;
+
+      // 3. 'write' (create/update) is permitted but strictly validated to match the expected schema and constraints.
+      allow write: if canAccess(sessionId) &&
+        // Validate that write requests contain only the fields defined in the schema
+        request.resource.data.keys().hasOnly([
+          'messages', 
+          'currentStage', 
+          'syncProgress', 
+          'missions', 
+          'currentNeuralState', 
+          'userSituation', 
+          'completionHistory', 
+          'cbtLogs',
+          'updatedAt'
+        ]) &&
+        // Core state validation
+        request.resource.data.currentStage in ['EMOTIONAL', 'RATIONAL', 'ACTIONABLE'] &&
+        request.resource.data.currentNeuralState in ['neutral', 'synced', 'overheated'] &&
+        
+        // Value ranges
+        (request.resource.data.syncProgress is int || request.resource.data.syncProgress is float) &&
+        request.resource.data.syncProgress >= 0 &&
+        request.resource.data.syncProgress <= 100 &&
+        
+        // Data structure validation
+        request.resource.data.messages is list &&
+        request.resource.data.messages.size() <= 300 &&
+        
+        // Optional fields validation
+        (!('updatedAt' in request.resource.data) || request.resource.data.updatedAt is string) &&
+        (!('userSituation' in request.resource.data) || request.resource.data.userSituation == null || request.resource.data.userSituation is map) &&
+        (!('completionHistory' in request.resource.data) || request.resource.data.completionHistory == null || request.resource.data.completionHistory is map) &&
+        (!('missions' in request.resource.data) || request.resource.data.missions == null || (request.resource.data.missions is list && request.resource.data.missions.size() <= 50)) &&
+        (!('cbtLogs' in request.resource.data) || request.resource.data.cbtLogs == null || (request.resource.data.cbtLogs is list && request.resource.data.cbtLogs.size() <= 200));
+
+      // 4. 'delete' is allowed if they own the session
+      allow delete: if canAccess(sessionId);
+    }
+  }
+}
