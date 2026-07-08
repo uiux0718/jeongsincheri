@@ -42,7 +42,7 @@ async function generateContentWithRetryAndFallback(
   delay = 500
 ): Promise<any> {
   let lastError: any = null;
-  const modelsToTry = [params.model, "gemini-1.5-flash-flash-lite"];
+  const modelsToTry = [params.model, "gemini-1.5-flash"];
   
   for (const model of modelsToTry) {
     let currentDelay = delay;
@@ -91,7 +91,7 @@ ${formattedHistory}
 `;
 
     const response = await generateContentWithRetryAndFallback(client, {
-      model: "gemini-1.5-flash-flash",
+      model: "gemini-1.5-flash",
       contents: summaryPrompt,
     });
     return response.text?.trim() || "이전 대화 맥락이 요약되지 않았습니다.";
@@ -192,7 +192,7 @@ ${situationText}
     }));
 
     const response = await generateContentWithRetryAndFallback(client, {
-      model: "gemini-1.5-flash-flash",
+      model: "gemini-1.5-flash",
       contents: formattedMessages,
       config: {
         systemInstruction: systemInstruction,
@@ -275,7 +275,7 @@ ${formattedHistory}
 `;
 
     const response = await generateContentWithRetryAndFallback(client, {
-      model: "gemini-1.5-flash-flash",
+      model: "gemini-1.5-flash",
       contents: summaryPrompt,
       config: {
         temperature: 0.7,
@@ -332,7 +332,7 @@ app.post("/api/prescription", async (req, res) => {
 `;
 
     const response = await generateContentWithRetryAndFallback(client, {
-      model: "gemini-1.5-flash-flash",
+      model: "gemini-1.5-flash",
       contents: `사용자의 고민: "${situation}"`,
       config: {
         systemInstruction: systemInstruction,
