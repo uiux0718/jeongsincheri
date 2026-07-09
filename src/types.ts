@@ -32,6 +32,7 @@ export interface DailyMission {
   status: "ACTIVE" | "COMPLETED" | "PENDING";
   activationBonus: number;
   icon: string;
+  difficulty?: "HIGH" | "MEDIUM" | "LOW";
 }
 
 export interface WeeklyLog {
@@ -47,4 +48,15 @@ export interface CbtPracticeLog {
   timestamp: string;
   inputs: Record<string, string>;
 }
+
+export interface DailyMoodLog {
+  id?: string;
+  userId: string;
+  mood: string;       // emoji string like "😊", "😢", "⚡", etc.
+  moodLabel: string;  // name like "편안함", "불안", "의욕상실", etc.
+  note: string;       // user's short comment
+  dateStr: string;    // "YYYY-MM-DD"
+  createdAt: string;  // ISO timestamp
+}
+
 

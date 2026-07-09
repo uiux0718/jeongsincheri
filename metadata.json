@@ -1,6 +1,6 @@
 {
   "name": "정신체리",
-  "description": "따뜻한 위로와 냉철한 뇌과학의 만남, 정신체리 AI 심리 상담 서비스",
+  "description": "복잡한 대화 없이 단 한 줄의 고민으로 즉시 처방전(1줄 위로 + 1줄 행동)을 받아 멘탈을 구조하는 마음 응급 대피소",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

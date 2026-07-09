@@ -32,12 +32,80 @@
         }
       },
       "required": ["messages", "currentStage", "syncProgress", "missions", "currentNeuralState", "updatedAt"]
+    },
+    "MindLog": {
+      "title": "MindLog",
+      "description": "User's mind log rating and gomin text",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "beforeScore": {
+          "type": "number"
+        },
+        "afterScore": {
+          "type": "number",
+          "properties": {},
+          "nullable": true
+        },
+        "userGomin": {
+          "type": "string"
+        },
+        "aiEmpathy": {
+          "type": "string"
+        },
+        "aiMission": {
+          "type": "string"
+        },
+        "isMissionCompleted": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["userId", "beforeScore", "userGomin", "createdAt"]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "User's daily short mood log",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "mood": {
+          "type": "string"
+        },
+        "moodLabel": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "dateStr": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["userId", "mood", "moodLabel", "note", "dateStr", "createdAt"]
     }
   },
   "firestore": {
     "chat_sessions/{sessionId}": {
       "schema": "ChatSession",
       "description": "Individual user session document"
+    },
+    "mindLogs/{logId}": {
+      "schema": "MindLog",
+      "description": "Mind log tracking for the user"
+    },
+    "dailyLogs/{logId}": {
+      "schema": "DailyLog",
+      "description": "Daily short mood log"
     }
   }
 }

@@ -54,5 +54,13 @@ service cloud.firestore {
       // 4. 'delete' is allowed if they own the session
       allow delete: if canAccess(sessionId);
     }
+
+    match /mindLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    match /dailyLogs/{logId} {
+      allow read, write: if true;
+    }
   }
 }
